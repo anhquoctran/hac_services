@@ -1,0 +1,66 @@
+extends layout.pug
+
+block contents
+    .container-fluid
+        .col-xs-12.col-sm-12.col-md-12.col-lg-12.col-xs-offset-0.col-sm-offset-0.col-md-offset-3.col-lg-offset-3.toppad
+            form#frmUpdateInfo(action='update-profile' method='post')
+                .card
+                    .card-header
+                        span Thông tin người dùng
+                    .card-body
+                        .row
+                            .col-md-12.col-lg-12.float-right
+                                table.table.table-borderless.table-user-information
+                                    tbody
+                                        tr
+                                            td Tài khoản
+                                            td
+                                                strong= '@' + user.account
+                                        tr
+                                            td Họ
+                                            td
+                                                input.col-md-5.form-control(type='text' maxlength='16' required name='lastname' value=user.lastname)
+                                        tr
+                                            td Tên
+                                            td
+                                                input.col-md-5.form-control(type='text' maxlength='16' required name='firstname' value=user.firstname)
+                                        tr
+                                            td Ngày sinh
+                                            td
+                                                input#birthday.col-md-5.form-control(type='date' maxlength='16' required value=prettyDate(user.birthday))
+                                        tr
+                                            td Giới tính
+                                            td
+                                                .input-group
+                                                    #radioBtn.btn-group
+                                                        a.btn.btn-primary.btn-sm.notActive(data-toggle="happy" data-title="1") Nam
+                                                        a.btn.btn-primary.btn-sm.notActive(data-toggle="happy" data-title="0") Nữ
+                                        tr
+                                            td Email
+                                            td
+                                                input.col-md-5.form-control(type='text' maxlength='128' required name='email' value=user.email == null || user.email == undefined || user.email === '' ? 'Không có' : user.email)
+                                        tr
+                                            td Số điện thoại
+                                            td
+                                                input.col-md-5.form-control(type='tel' maxlength='14' required name='phone' value=user.phonenumber)
+                    .card-footer
+                        small.float-left.mt-2 Copyright © 2018 Hue Industrial College
+                        .float-right
+                            button#btnEdit.btn.btn-primary.mr-2(type='submit')
+                                i.fas.fa-edit
+                                | &nbsp;&nbsp;
+                                | Chỉnh sửa
+                            button#btnPassword.btn.btn-success(type='button' data-toggle="modal" data-target="#squarespaceModal")
+                                i.fas.fa-key
+                                | &nbsp;&nbsp;
+                                | Đổi mật khẩu
+    include partials/password_dialog.pug
+                            
+    -function prettyDate(dateString){
+        -var date = new Date(dateString);
+        -var d = date.getDate();
+        -var monthNames = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" ];
+        -var m = monthNames[date.getMonth()];
+        -var y = date.getFullYear();
+        -return y+'-'+m+'-'+d;
+    -}

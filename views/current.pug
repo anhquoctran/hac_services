@@ -1,0 +1,32 @@
+extends layout.pug
+block links
+    -var selected = '/latest'
+block contents
+    .col-md-12
+        br
+        .card
+            .card-body
+                if data
+                    .jumbotron
+                        h4.display-4 Tải xuống phiên bản mới nhất
+                        p.lead Phiên bản:
+                            p.font-weight-bold
+                            = data.version + ' '
+                            |  [EXE
+                            = ', ' + data.size + ']'
+                        hr.my-4
+                        p.lead
+                            a.btn.btn-primary.btn-lg(href=data.url role="button" target='_blank')
+                                span.fas.fa-download
+                                | &nbsp;Tải xuống
+                else
+                    .jumbotron
+                        h4.display-4 Phiên bản mới nhất sẽ xuất hiện sớm
+                        p.lead Phiên bản hiện tại: 
+                            p.font-weight-bold
+                            | 1.0.1.10278
+                        hr.my-4
+                        p.lead
+                            a.btn.btn-outline-secondary.btn-lg(href=menu[2][1], role='link') Xem các phiên bản khác
+            .card-footer
+                small Copyright © 2018 Hue Industrial College

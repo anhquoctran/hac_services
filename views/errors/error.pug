@@ -1,0 +1,23 @@
+doctype html
+head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    meta(http-equiv='X-UA-Compatible' content='ie=edge')
+    title #{title}
+    include ../partials/stylesheets.pug
+body
+.container
+    br
+    .card
+        .card-body
+            .jumbotron
+                h3.display-5 Lỗi 
+                    = code + ' '
+                    | :(
+                p.lead= message
+                hr.my-4
+                p.lead
+                    a(href='#' onclick='window.history.back();')
+                        | &nbsp;Trở về trang trước
+        .card-footer
+            small Copyright © 2018 Hue Industrial College

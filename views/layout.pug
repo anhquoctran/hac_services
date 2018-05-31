@@ -1,0 +1,17 @@
+doctype html
+head
+	meta(charset='UTF-8')
+	meta(name='viewport' content='width=device-width, initial-scale=1.0')
+	meta(http-equiv='X-UA-Compatible' content='ie=edge')
+	title #{title}
+	include partials/stylesheets.pug
+body
+
+	.container
+		-var menu = [["Trang chủ", "/latest"],["Tải lên", "/upload-version"],["Lưu trữ", "/archive/older"],["Biển số", "/surveillance-monitoring"]]
+		block links
+			-var selected = '/latest'
+		include partials/simple_nav.pug
+		.row
+			block contents
+	include partials/scripts.pug

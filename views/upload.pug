@@ -1,0 +1,33 @@
+extends layout.pug
+
+block links
+	-var selected = '/upload-version'
+
+block contents
+	.col-md-12
+		br
+		.card
+			.card-header
+				strong Tải lên phiên bản
+			.card-body
+				form#formUpload
+					#inputFileGroup.input-group
+						input#filename.form-control(type='text' readonly placeholder='Chọn file để tải lên (.exe)...' size='63')
+						.input-group-append.upload-btn-wrapper
+							button#btn-browse.form-control.btn.btn-primary(type='button') ...
+							input#vrs.btn.btn-primary(type='file' accept='.exe' name='vrs' aria-describedby='fileHelp')
+					br
+
+					#alert.alert(class='alert-success' role='alert')
+
+					include partials/table.pug
+					
+					.float-left
+						a.btn.btn-outline-primary(href='/archive/older' role='button') Danh sách phiên bản
+					.float-right
+						button#upload.btn.btn-primary(name='upload' type='button')
+							span.fas.fa-upload
+							| &nbsp;&nbsp;
+							| Bắt đầu tải lên
+			.card-footer
+				small Copyright © 2018 Hue Industrial College

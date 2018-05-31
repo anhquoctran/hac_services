@@ -1,0 +1,28 @@
+extends layout.pug
+
+block links
+    -var selected = '/archive/older'
+
+block contents
+    .col-md-12
+        br
+        .card
+            .card-body
+                table.table.table-striped.table-sm
+                    thead
+                        tr
+                            th(scope='col') Phiên bản
+                            th(scope='col') Tải xuống
+                    tbody
+                        if data
+                            if data.length > 0
+                                each version in data
+                                    tr
+                                        td= version.version
+                                        td
+                                            a(href='#{version.url}') Tải xuống
+            .card-footer
+                .float-left
+                    a(href='/upload-version') Tải lên phiên bản mới
+                .float-right
+                    a(href='/upload-version') Phiên bản mới nhất

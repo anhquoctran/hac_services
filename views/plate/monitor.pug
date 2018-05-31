@@ -1,0 +1,49 @@
+extends layout.pug
+
+block links
+    -var selected = '/surveillance-monitoring'
+block contents
+    -var link = "http://fakeimg.pl/426x240/"
+    .col-md-9
+        .row
+            .col-md-3.barrier-video
+                .embed-responsive.embed-responsive-16by9
+                    video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+            .col-md-3.barrier-video
+                .embed-responsive.embed-responsive-16by9
+                    video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+            .col-md-3.barrier-video
+                .embed-responsive.embed-responsive-16by9
+                    video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+            .col-md-3.barrier-video
+                .embed-responsive.embed-responsive-16by9
+                    video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+            .col-md-3.barrier-video
+                .embed-responsive.embed-responsive-16by9
+                    video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+            .col-md-3.barrier-video
+                .embed-responsive.embed-responsive-16by9
+                    video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+            .col-md-3.barrier-video
+                .embed-responsive.embed-responsive-16by9
+                    video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+            .col-md-3.barrier-video
+                .embed-responsive.embed-responsive-16by9
+                    video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+    #plate-data-col.col-md-3
+        .row
+            table#table-list-plate.table.table-hover.table-borderless.table-sm
+                thead
+                    tr
+                        th(scope='col') Biển số
+                tbody
+                    tr
+                        td
+                            .col-md-12.barrier-card
+                                a.float-left(href='#')
+                                    img.barrier-card__size(src='http://via.placeholder.com/100x100' alt='...')
+                                .barrier-card__body
+                                    p text
+                                    p text
+                                    p text
+                                    p text

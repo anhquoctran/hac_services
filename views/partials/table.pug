@@ -1,0 +1,39 @@
+
+block table_contents
+    table.table.table-borderless
+        thead
+            tr
+                th(scope='col') Thuộc tính
+                th(scope='col') Giá trị
+        tbody
+            tr
+                td UUID
+                td#uuid không có
+            tr
+                td Tên
+                td#name không có
+            tr
+                td Phiên bản
+                td
+                    #version.container.row
+                        input#major.form-control.form-control-sm.col-sm-1(type='number' min='0' value='1' maxlength='5' name='major' required placeholder='1')
+                        | .
+                        input#minor.form-control.form-control-sm.col-sm-1(type='number' min='0' value='0' maxlength='5' name='minor' required placeholder='0')
+                        | .
+                        input#build.form-control.form-control-sm.col-sm-1(type='number' min='0' value='1' maxlength='5' name='build' required placeholder='0')
+                        | .
+                        input#revision.form-control.form-control-sm.col-sm-1(type='number' min='0' value='278' maxlength='5' name='revision' required placeholder='0')
+            tr
+                td  Mới nhất
+                td#latest
+                    select#latestVal.form-control.form-control-sm.col-sm-1(name='latest')
+                        option(value='1' selected='') có
+                        option(value='0') không
+            tr
+                td Kích thước
+                td 
+                    input#size(name='size' type='text' readonly style='border: none' value='không có')
+            tr
+                td Liên kết tải xuống
+                td
+                    a#url không có

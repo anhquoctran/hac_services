@@ -1,0 +1,17 @@
+doctype html
+head
+	meta(charset='UTF-8')
+	meta(name='viewport' content='width=device-width, initial-scale=1.0')
+	meta(http-equiv='X-UA-Compatible' content='ie=edge')
+	title #{title}
+	include ../partials/stylesheets.pug
+body(style='height: 100%')
+
+	.container-fluid
+		-var menu = [["Giám sát", "/surveillance-monitoring"], ['Danh sách biển số', '/plate']]
+		block links
+			-var selected = '/plate'
+		include partials/nav.pug
+		.row
+			block contents
+	include partials/scripts.pug

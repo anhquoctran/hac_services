@@ -1,0 +1,35 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title= title
+        include partials/stylesheets.pug
+    body
+        .container.h-100.mx-auto
+            br
+            br
+            .row.h-100.justify-content-center.align-items-center
+                .col-md-5
+                    .card
+                        .card-header
+                            h5.card-title.justify-content-center.text-center Đăng nhập Hệ thống
+                        .card-body
+                            if error !== undefined || error !== []
+                                each msg in error
+                                    .alert.alert-danger(role='alert')= msg
+                            form#formLogin(accept-charset='UTF-8' action='/login' method='post' role='form')
+                                fieldset
+                                    .form-group
+                                        input#usernameInput.form-control(placeholder='Tên đăng nhập' name='username' required type='text')
+                                    .form-group
+                                        input#passwordInput.form-control(placeholder='Mật khẩu' name='password' required type='password' value='')
+                                    .form-group.form-check
+                                        input#checkRemember.form-check-input(type='checkbox' name='rememberme')
+                                        label.form-check-label(for="checkRemember")
+                                        | Ghi nhớ đăng nhập
+                                    input.btn.btn-lg.btn-primary.btn-block(type='submit' value='Đăng nhập')
+                        .card-footer
+                            small.float-left Copyright © 2018 Hue Industrial College
+        include partials/scripts.pug
