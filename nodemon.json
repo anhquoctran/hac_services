@@ -1,0 +1,7 @@
+{
+    "verbose": true,
+    "ignore": ["node_modules/*", "ffmpeg/*", "bin/*", "log.json", "test_socket.js", "test_sqlserver.js"],
+    "execMap": {
+        "node": "node"
+    }
+}
