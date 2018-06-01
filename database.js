@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const operatorsAliases = require('./operators')
 
 var sequelize = new Sequelize('hac_db', 'sa', 'anhquoc1996@@', {
 	logging: true,
@@ -10,7 +11,7 @@ var sequelize = new Sequelize('hac_db', 'sa', 'anhquoc1996@@', {
 	},
 	host: 'localhost',
 	database: 'hac_db',
-	operatorsAliases: false,
+	operatorsAliases: operatorsAliases,
 });
 
 module.exports = sequelize;
