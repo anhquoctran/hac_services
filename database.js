@@ -1,14 +1,10 @@
 const Sequelize = require('sequelize');
 
-var sequelize = new Sequelize('hac_db', 'sa', 'anhquoc1996@@', {
+var sequelize = new Sequelize('hac_db', 'sa', '@Hueic2018', {
 	logging: true,
 	dialect: 'mssql',
 	dialectModulePath: 'sequelize-msnodesqlv8',
-	dialectOptions: {
-		instanceName: 'SQLEXPRESS',
-		trustedConnection: true
-	},
-	host: 'localhost',
+	host: '127.0.0.1',
 	database: 'hac_db',
 	operatorsAliases: false,
 });
