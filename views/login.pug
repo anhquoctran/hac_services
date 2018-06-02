@@ -1,12 +1,12 @@
 doctype html
-html(lang="en")
+html(lang="en" style='heigh: 100%')
     head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         meta(http-equiv="X-UA-Compatible", content="ie=edge")
         title= title
         include partials/stylesheets.pug
-    body
+    body(style='min-heigh: 100% !important; background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0,0.85)), url("images/background.jpg"); background-size: cover;')
         .container.h-100.mx-auto
             br
             br
@@ -14,8 +14,13 @@ html(lang="en")
                 .col-md-5
                     .card
                         .card-header
-                            h5.card-title.justify-content-center.text-center Đăng nhập Hệ thống
+                            h5.text-center.justify-content-center.strong.font-weight-bold(style='font-size: 1.14em') HUEIC LICENSE PLATES RECOGNITION SYSTEM
                         .card-body
+                            .container.mb-3
+                                .row
+                                    .col-md-12.text-center
+                                        a.mx-auto.d-block(href="#")
+                                            img.img-responsive(src='images/logo.png', width='150' heigh='150' alt='hueic_logo')
                             if error !== undefined || error !== []
                                 each msg in error
                                     .alert.alert-danger(role='alert')= msg

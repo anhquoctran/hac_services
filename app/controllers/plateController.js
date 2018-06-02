@@ -77,8 +77,8 @@ function getImage(req, res) {
 function monitor(req, res) {
     db.sync()
     .then(()=> {
-        Plate.findAll({ order: [ 'frametime', 'desc' ], limit: 10 })
-        then(list => {
+        Plate.findAll({ order: [['frametime', 'desc' ]], limit: 10 })
+        .then(list => {
             res.render('plate/monitor', {
                 title: "Giảm sát hệ thống nhận diện biển số",
                 user: req.user

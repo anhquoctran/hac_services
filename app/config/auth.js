@@ -1,5 +1,6 @@
 var helpers = require('../middleware/helpers')
 var sha512 = require('js-sha512').sha512
+var authMidd = require('../middleware/authentication')
 
 module.exports = function (passport, user) {
     var User = user;
@@ -25,6 +26,39 @@ module.exports = function (passport, user) {
             }
         });
     });
+
+    var tokens = {}
+
+    function consumeRememberMeToken(token, fn) {
+        var uid = tokens[token];
+        delete tokens[token];
+        return fn(null, uid);
+    }
+
+    function saveRememberMeToken(token, uid, fn) {
+        tokens[token] = uid;
+        return fn();
+    }
+
+    passport.use(new RememberMeStrategy(
+        function(token, done) {
+            authMidd.consumeRememberMeToken(token, function(err, uid) {
+            if (err) { return done(err); }
+            if (!uid) { return done(null, false); }
+            
+            User.findById(uid)
+            .then(u => {
+                if (!u) { return done(null, false); }
+                return done(null, u);
+            })
+            .catch(err => {
+                return done(err);
+            });
+          });
+        },
+        issueToken
+    ));
+
 
     passport.use('local-signin', new LocalStrategy({
             usernameField: 'username',

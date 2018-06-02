@@ -8,4 +8,27 @@ function isLoggedIn(req, res, next) {
  
 }
 
+function issueToken(user, done) {
+    var token = helpers.genChars(64);
+    saveRememberMeToken(token, user.id, function(err) {
+        if (err) { return done(err); }
+        return done(null, token);
+    });
+}
+
+var tokens = {}
+
+function consumeRememberMeToken(token, fn) {
+    var uid = tokens[token];
+    delete tokens[token];
+    return fn(null, uid);
+}
+
+function saveRememberMeToken(token, uid, fn) {
+    tokens[token] = uid;
+    return fn();
+}
+
 module.exports.isLoggedIn = isLoggedIn
+module.exports.saveRememberMeToken = saveRememberMeToken;
+module.exports.consumeRememberMeToken = consumeRememberMeToken;

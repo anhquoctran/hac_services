@@ -4,11 +4,11 @@ var os = require('os');
 var ifaces = os.networkInterfaces();
 var appDir = path.dirname(require.main.filename)
 
-function genChars() {
+function genChars(length = 5) {
     var text = "";
     var possible = "abcdefghijklmnopqrstuvwxyz";
 
-    for (var i = 0; i < 5; i++)
+    for (var i = 0; i < length; i++)
         text += possible.charAt(Math.floor(Math.random() * possible.length));
 
     return text;
