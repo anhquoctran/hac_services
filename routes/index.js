@@ -14,7 +14,7 @@ validator.validator = function(datestr) {
 
 function routes(passport) {
 	router.get('/', function (req, res) {
-		res.redirect('/latest')
+		res.redirect('/surveillance-monitoring')
 	});
 
 	router.get('/upload-version', authMidd.isLoggedIn, versionController.uploadVersion)
