@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 const operatorsAliases = require('./operators')
 
-var sequelize = new Sequelize('hac_db', 'sa', '@Hueic2018', {
-	logging: true,
+var sequelize = new Sequelize('hac_db', 'sa', 'anhquoc1996@@', {
+	logging: false,
 	dialect: 'mssql',
 	dialectModulePath: 'sequelize-msnodesqlv8',
 	host: '127.0.0.1',

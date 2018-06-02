@@ -75,16 +75,30 @@ function getImage(req, res) {
 }
 
 function monitor(req, res) {
-    res.render('plate/monitor', {
-        title: "Giảm sát hệ thống nhận diện biển số",
-        user: req.user
+    db.sync()
+    .then(()=> {
+        Plate.findAll({ order: [ 'frametime', 'desc' ], limit: 10 })
+        then(list => {
+            res.render('plate/monitor', {
+                title: "Giảm sát hệ thống nhận diện biển số",
+                user: req.user
+            })
+        })
+        .catch(error => {
+
+        })
+        
     })
+    .catch(e => {
+
+    })
+    
 }
 
-function getPlates(req, res) {
+function getPlatesIndex(req, res) {
     res.render('plates', 
     { 
-        title: 'Danh sách biển số',
+        title: 'Danh sách',
         user: user
     })
 }
@@ -92,4 +106,4 @@ function getPlates(req, res) {
 module.exports.addImage = addImage;
 module.exports.getImage = getImage;
 module.exports.monitor = monitor;
-module.exports.getPlates = getPlates;
+module.exports.getPlatesIndex = getPlatesIndex;
