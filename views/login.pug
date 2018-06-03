@@ -10,7 +10,7 @@ html(lang="en" style='heigh: 100%')
         .container.h-100.mx-auto
             br
             br
-            .row.h-100.justify-content-center.align-items-center
+            .row.h-100.justify-content-center.align-items-center.mt-5
                 .col-md-5
                     .card
                         .card-header
@@ -30,10 +30,6 @@ html(lang="en" style='heigh: 100%')
                                         input#usernameInput.form-control(placeholder='Tên đăng nhập' name='username' required type='text')
                                     .form-group
                                         input#passwordInput.form-control(placeholder='Mật khẩu' name='password' required type='password' value='')
-                                    .form-group.form-check
-                                        input#checkRemember.form-check-input(type='checkbox' name='rememberme')
-                                        label.form-check-label(for="checkRemember")
-                                        | Ghi nhớ đăng nhập
                                     input.btn.btn-lg.btn-primary.btn-block(type='submit' value='Đăng nhập')
                         .card-footer
                             small.float-left Copyright © 2018 Hue Industrial College

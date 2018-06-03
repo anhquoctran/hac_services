@@ -85,12 +85,20 @@ function monitor(req, res) {
             })
         })
         .catch(error => {
-
+            res.render('errors/error', {
+                title: "Lỗi",
+                code: '500',
+                message: 'Truy vấn không hợp lệ'
+            })
         })
         
     })
     .catch(e => {
-
+        res.render('errors/error', {
+            title: "Lỗi",
+            code: '500',
+            message: 'Không thể kết nối Cơ sở dữ liệu'
+        })
     })
     
 }
@@ -98,8 +106,8 @@ function monitor(req, res) {
 function getPlatesIndex(req, res) {
     res.render('plates', 
     { 
-        title: 'Danh sách',
-        user: user
+        title: 'Danh sách biển số',
+        user: req.user
     })
 }
 

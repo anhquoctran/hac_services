@@ -21,10 +21,18 @@ function routes(passport) {
 
 	router.get('/login', userController.getLogin)
 
-	router.post('/login', passport.authenticate('local-signin', {
+	router.post('/login', [passport.authenticate('local-signin', {
 		successRedirect: '/',
 		failureRedirect: '/login'
-	}))
+	}), (req, res, next) => {
+		if (!req.body.remember_me) { return next(); }
+    
+		authMidd.issueToken(req.user, function(err, token) {
+			if (err) { return next(err); }
+		  	res.cookie('remember_me', token, { path: '/', httpOnly: true, maxAge: 604800000 });
+		  	return next();
+		});
+	}])
 
 	router.get('/profile/:username', authMidd.isLoggedIn, userController.showProfile)
 

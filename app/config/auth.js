@@ -56,7 +56,7 @@ module.exports = function (passport, user) {
             });
           });
         },
-        issueToken
+        authMidd.issueToken
     ));
 
 

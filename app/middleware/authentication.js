@@ -29,6 +29,7 @@ function saveRememberMeToken(token, uid, fn) {
     return fn();
 }
 
-module.exports.isLoggedIn = isLoggedIn
+module.exports.isLoggedIn = isLoggedIn;
 module.exports.saveRememberMeToken = saveRememberMeToken;
 module.exports.consumeRememberMeToken = consumeRememberMeToken;
+module.exports.issueToken = issueToken;
