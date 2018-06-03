@@ -8,28 +8,3 @@ block scripts
     script(src='/javascripts/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.js')
     script(src='/javascripts/vendors/DataTables/datatables.min.js')
     script(src='/javascripts/dataprocessor.js')
-    script.
-        $(document).ready(function() {
-            $('#plate-table').DataTable({
-                language: {
-                    sProcessing:   "Đang xử lý...",
-                    sLengthMenu:   "Hiển thị&nbsp; _MENU_ &nbsp;mục",
-                    sZeroRecords:  "Không có dữ liệu",
-                    sInfo:         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
-                    sInfoEmpty:    "Đang xem 0 đến 0 trong tổng số 0 mục",
-                    sInfoFiltered: "(được lọc từ _MAX_ mục)",
-                    sInfoPostFix:  "",
-                    sSearch:       "Tìm kiếm:",
-                    sUrl:          "",
-                    oPaginate: {
-                        sFirst:    "Đầu",
-                        sPrevious: "Trước",
-                        sNext:     "Tiếp",
-                        sLast:     "Cuối"
-                    }
-                },
-                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Tất cả"]]
-            });
-
-            $("#formSearchPlate").validate();
-        })

@@ -24,10 +24,10 @@ block contents
                             th #
                             th Mã camera
                             th Thời gian
-                            th Ảnh biển số
                             th Ảnh phương tiện
+                            th Ảnh biển số
                             th Biển số
-                    tbody
+                    tbody#content-result
                         if plates
                             each plate, index in plates
                                 tr
@@ -38,16 +38,16 @@ block contents
                                     td
                                         span= prettyDate(plate.frametime)
                                     td
-                                        img.img-responsive(src='data:image/jpeg;base64,' + plate.encoded_vehicle_image alt='plate' width='80', heigh='80')
+                                        img.img-responsive(src='data:image/jpeg;base64,' + plate.encoded_vehicle_image alt='vehicle' width='80', heigh='80')
                                     td
-                                        img.img-responsive(src='data:image/jpeg;base64,' + plate.encoded_plate_image alt='vehicle' width='128', heigh='72')
+                                        img.img-responsive(src='data:image/jpeg;base64,' + plate.encoded_plate_image alt='plate' width='128', heigh='72')
                                     td
                                         span= plate.vehicle_plate
 
             -function prettyDate(dateString){
                 -var date = new Date(dateString);
                 -var d = date.getDate();
-                -var monthNames = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" ];
+                -var monthNames = [ "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" ];
                 -var m = monthNames[date.getMonth()];
                 -var y = date.getFullYear();
                 -var h = date.getHours();

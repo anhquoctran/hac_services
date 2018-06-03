@@ -6,9 +6,12 @@ var upload = require('../app/config/storage')
 var validator = require('validator')
 var plateController = require('../app/controllers/plateController')
 var authMidd = require('../app/middleware/authentication')
-const { check, validationResult } = require('express-validator/check')
+const {
+	check,
+	validationResult
+} = require('express-validator/check')
 
-validator.validator = function(datestr) {
+validator.validator = function (datestr) {
 	return !isNaN(Date.parse(datestr))
 }
 
@@ -25,12 +28,20 @@ function routes(passport) {
 		successRedirect: '/',
 		failureRedirect: '/login'
 	}), (req, res, next) => {
-		if (!req.body.remember_me) { return next(); }
-    
-		authMidd.issueToken(req.user, function(err, token) {
-			if (err) { return next(err); }
-		  	res.cookie('remember_me', token, { path: '/', httpOnly: true, maxAge: 604800000 });
-		  	return next();
+		if (!req.body.remember_me) {
+			return next();
+		}
+
+		authMidd.issueToken(req.user, function (err, token) {
+			if (err) {
+				return next(err);
+			}
+			res.cookie('remember_me', token, {
+				path: '/',
+				httpOnly: true,
+				maxAge: 604800000
+			});
+			return next();
 		});
 	}])
 
@@ -50,45 +61,54 @@ function routes(passport) {
 
 	router.get('/latest', authMidd.isLoggedIn, versionController.latest)
 
-	router.post('/add_image',[
+	router.post('/add_image', [
 		check('camera_id')
-			.exists()
-			.trim()
-			.isNumeric()
-			.withMessage('cannot be null and must be numeric type'),
+		.exists()
+		.trim()
+		.isNumeric()
+		.withMessage('cannot be null and must be numeric type'),
 
 		check('frametime')
-			.exists()
-			.trim()
-			.withMessage('cannot be null and must be date time type')
-		,
+		.exists()
+		.trim()
+		.withMessage('cannot be null and must be date time type'),
 		check('location')
-			.exists()
-			.trim()
-			.withMessage('cannot be null'),
+		.exists()
+		.trim()
+		.withMessage('cannot be null'),
 
 		check('vehicle_plate')
-			.exists()
-			.trim()
-			.withMessage('cannot be null'),
+		.exists()
+		.trim()
+		.withMessage('cannot be null'),
 
 		check('encoded_plate_image')
-			.exists()
-			.trim()
-			.isBase64()
-			.withMessage('cannot be null and must be a base64 string'),
+		.exists()
+		.trim()
+		.isBase64()
+		.withMessage('cannot be null and must be a base64 string'),
 		check('encoded_vehicle_image')
-			.exists()
-			.trim()
-			.isBase64()
-			.withMessage('cannot be null and must be a base64 string')
+		.exists()
+		.trim()
+		.isBase64()
+		.withMessage('cannot be null and must be a base64 string')
 	], plateController.addImage)
 
 	router.get('/surveillance-monitoring', authMidd.isLoggedIn, plateController.monitor)
 
 	router.get('/get-plates-list', authMidd.isLoggedIn, plateController.getPlatesIndex)
 
-	router.post('/plates/filter', authMidd.isLoggedIn, plateController.filter)
+	router.post('/plates/filter', [
+		authMidd.isLoggedIn,
+		check('dateFrom')
+		.exists()
+		.trim()
+		.withMessage('cannot be null and must be date time type'),
+		check('dateTo')
+		.exists()
+		.trim()
+		.withMessage('cannot be null and must be date time type')
+	], plateController.filter)
 }
 
 module.exports.routes = routes;
