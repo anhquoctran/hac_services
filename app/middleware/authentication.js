@@ -3,9 +3,14 @@ function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
      
         return next();
-         
-    res.redirect('/login');
- 
+    
+    if(req.accepts('html'))
+        res.redirect('/login');
+    else {
+        res.status(401).send({
+            message: "Unauthorized. Please login again"
+        })
+    }
 }
 
 function issueToken(user, done) {

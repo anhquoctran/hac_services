@@ -87,6 +87,8 @@ function routes(passport) {
 	router.get('/surveillance-monitoring', authMidd.isLoggedIn, plateController.monitor)
 
 	router.get('/get-plates-list', authMidd.isLoggedIn, plateController.getPlatesIndex)
+
+	router.post('/plates/filter', authMidd.isLoggedIn, plateController.filter)
 }
 
 module.exports.routes = routes;

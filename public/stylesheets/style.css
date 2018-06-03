@@ -1,3 +1,16 @@
+body, html {
+    height:  100%;
+    margin:  0px auto;
+    padding: 0px auto;
+}
+
+.wrapper {
+    height:     auto;       /* These two lines were the key. */
+    min-height: 100%;
+    margin:     0px auto;
+    padding:    0px auto;
+ }
+
 .container-fluid {
     padding-right:0;
     padding-left:0;

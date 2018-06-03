@@ -2,5 +2,56 @@ extends layout.pug
 
 block links
     -var selected = '/get-plates-list'
-    
+
 block contents
+            .col-md-11.col-lg-11.col-sm-11.col-xs-11.ml-4.mt-4
+
+                form#formSearchPlate.form-inline.mb-3(action='' method='post')
+                    .form-group
+                        label.mb-2.mr-sm-2(for='fromDate') Từ ngày
+                        input#fromDate.form-control.mb-2.mr-sm-2(type='date' required placeholder='từ ngày')
+                    .form-group
+                        label.mb-2.mr-sm-2(for='toDate') đến ngày
+                        input#toDate.form-control.mb-2.mr-sm-2(type='date' placeholder='đến ngày' required)
+                    .form-group
+                        button#btnFilter.btn.btn-primary.mb-2.mr-sm-2(type='button')
+                            i.fas.fa-calendar-alt
+                            | &nbsp;Lọc theo thời gian
+                        
+                table#plate-table.table.table-striped.table-bordered.table-sm(role='grid')
+                    thead
+                        tr
+                            th #
+                            th Mã camera
+                            th Thời gian
+                            th Ảnh biển số
+                            th Ảnh phương tiện
+                            th Biển số
+                    tbody
+                        if plates
+                            each plate, index in plates
+                                tr
+                                    td
+                                        span= index+1
+                                    td
+                                        span= plate.camera_id
+                                    td
+                                        span= prettyDate(plate.frametime)
+                                    td
+                                        img.img-responsive(src='data:image/jpeg;base64,' + plate.encoded_vehicle_image alt='plate' width='80', heigh='80')
+                                    td
+                                        img.img-responsive(src='data:image/jpeg;base64,' + plate.encoded_plate_image alt='vehicle' width='128', heigh='72')
+                                    td
+                                        span= plate.vehicle_plate
+
+            -function prettyDate(dateString){
+                -var date = new Date(dateString);
+                -var d = date.getDate();
+                -var monthNames = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" ];
+                -var m = monthNames[date.getMonth()];
+                -var y = date.getFullYear();
+                -var h = date.getHours();
+                -var month = date.getMinutes();
+                -var second = date.getSeconds();
+                -return d +'-'+ m +'-'+y + ' ' + h + ':' + month + ':' + second;
+            -}

@@ -104,14 +104,42 @@ function monitor(req, res) {
 }
 
 function getPlatesIndex(req, res) {
-    res.render('plates', 
-    { 
-        title: 'Danh sách biển số',
-        user: req.user
+    db.sync()
+    .then(() => {
+        Plate.findAll({ order: [['frametime', 'desc']]})
+        .then(result => {
+
+            res.render('plate/plates',
+            { 
+                title: 'Danh sách biển số',
+                user: req.user,
+                plates: result
+            })
+        })
+        .catch(err => {
+            res.render('errors/error', {
+                title: "Lỗi",
+                code: '500',
+                message: 'Truy vấn không hợp lệ'
+            })
+        })
     })
+    .catch(err => {
+        res.render('errors/error', {
+            title: "Lỗi",
+            code: '500',
+            message: 'Không thể kết nối Cơ sở dữ liệu'
+        })
+    })
+
+    function filter(req, res) {
+
+    }
+    
 }
 
 module.exports.addImage = addImage;
 module.exports.getImage = getImage;
 module.exports.monitor = monitor;
 module.exports.getPlatesIndex = getPlatesIndex;
+module.exports.filter = filter;

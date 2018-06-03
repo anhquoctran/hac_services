@@ -5,13 +5,12 @@ head
 	meta(http-equiv='X-UA-Compatible' content='ie=edge')
 	title #{title}
 	include ../partials/stylesheets.pug
-body(style='height: 100%')
-
-	.container-fluid
-		-var menu = [["Giám sát", "/surveillance-monitoring"], ['Danh sách biển số', '/plate']]
-		block links
-			-var selected = '/plate'
-		include partials/nav.pug
-		.row
+body
+	.wrapper
+		.container-fluid
+			-var menu = [["Giám sát", "/surveillance-monitoring"], ['Danh sách biển số', '/get-plates-list']]
+			block links
+				-var selected = '/plate'
+			include partials/nav.pug
 			block contents
 	include partials/scripts.pug
