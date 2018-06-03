@@ -17,7 +17,7 @@ block nav
                             a.nav-link(href=val[1])= val[0]
             ul.nav.navbar-nav.ml-auto
                 li.mr-2
-                    form(action='/latest')
+                    form(action='/latest?redirect=true' method='get')
                         input.btn.btn-primary(type='submit' value='Quản lý phiên bản')
                 li.nav-item.dropdown
                     button#navbarDropdown.btn.btn-success.dropdown-toggle(role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
