@@ -5,48 +5,51 @@ block links
     
 block contents
     -var link = "http://fakeimg.pl/80x80/"
-    .col-md-9.float-left
-        .row
-            .col-md-3.barrier-video
-                .embed-responsive.embed-responsive-16by9
-                    video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
-            .col-md-3.barrier-video
-                .embed-responsive.embed-responsive-16by9
-                    video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
-            .col-md-3.barrier-video
-                .embed-responsive.embed-responsive-16by9
-                    video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
-            .col-md-3.barrier-video
-                .embed-responsive.embed-responsive-16by9
-                    video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
-            .col-md-3.barrier-video
-                .embed-responsive.embed-responsive-16by9
-                    video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
-            .col-md-3.barrier-video
-                .embed-responsive.embed-responsive-16by9
-                    video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
-            .col-md-3.barrier-video
-                .embed-responsive.embed-responsive-16by9
-                    video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
-            .col-md-3.barrier-video
-                .embed-responsive.embed-responsive-16by9
-                    video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
-    #plate-data-col.col-md-3.float-right
-        table#table-list-plate.table.table-stripped.table-hover(style='max-height: 700px!important')
-            thead
-                tr
-                    th(scope='col') Biển số
-            tbody#bodyPlateTable
-                -var n = 1
-                while n <= 20
-                    tr
-                        td
-                            .ml-0
-                                .col-md-3
-                                    img.img-responsive.float-left(src=link, alt="")
-                                .col-md-9.ml-1.mr-0
-                                    h6.data Mã camera: #{n}
-                                    h6.data Biển số:
-                                    h6.data Thời gian:
-                                    h6.data Vị trí: Hueic
-                    - n++
+    #row-monitoring.row
+        .col-md-9.float-left
+            .row
+                .col-md-3.barrier-video
+                    .embed-responsive.embed-responsive-16by9
+                        video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+                .col-md-3.barrier-video
+                    .embed-responsive.embed-responsive-16by9
+                        video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+                .col-md-3.barrier-video
+                    .embed-responsive.embed-responsive-16by9
+                        video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+                .col-md-3.barrier-video
+                    .embed-responsive.embed-responsive-16by9
+                        video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+                .col-md-3.barrier-video
+                    .embed-responsive.embed-responsive-16by9
+                        video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+                .col-md-3.barrier-video
+                    .embed-responsive.embed-responsive-16by9
+                        video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+                .col-md-3.barrier-video
+                    .embed-responsive.embed-responsive-16by9
+                        video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+                .col-md-3.barrier-video
+                    .embed-responsive.embed-responsive-16by9
+                        video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+        .col-md-3
+            //button.btn.btn-secondary(disabled) Biển số
+            #plate-data-col(style='max-height: 100% !important; overflow-y: scroll')
+                table#table-list-plate.table.table-striped.table-hover
+                    thead
+                        tr
+                            th Biển số
+                    tbody#bodyPlateTable
+                        -var n = 1
+                        while n <= 20
+                            tr
+                                td
+                                    .row
+                                        .col-md-3
+                                            img.img-responsive(src=link, alt="")
+                                        .col-md-9
+                                            h6.data Mã camera: #{n}
+                                            h6.data Biển số:
+                                            h6.data Thời gian:
+                                            h6.data Vị trí: Hueic
+                            - n++

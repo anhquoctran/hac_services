@@ -43,7 +43,7 @@ function routes(passport) {
 			});
 			return next();
 		});
-	}])
+	}, authMidd.isLoggedIn])
 
 	router.get('/profile/:username', authMidd.isLoggedIn, userController.showProfile)
 

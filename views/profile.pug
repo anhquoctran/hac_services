@@ -15,7 +15,8 @@ block contents
                                         tr
                                             td Tài khoản
                                             td
-                                                strong= '@' + user.account
+                                                mark(style='background-color: yellow !important')
+                                                    strong= '@' + user.account
                                         tr
                                             td Họ
                                             td
@@ -33,7 +34,7 @@ block contents
                                             td
                                                 .input-group
                                                     #radioBtn.btn-group
-                                                        a.btn.btn-primary.btn-sm.notActive(data-toggle="happy" data-title="1") Nam
+                                                        a.btn.btn-primary.btn-sm.active(data-toggle="happy" data-title="1") Nam
                                                         a.btn.btn-primary.btn-sm.notActive(data-toggle="happy" data-title="0") Nữ
                                         tr
                                             td Email

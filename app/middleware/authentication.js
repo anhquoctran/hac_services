@@ -4,8 +4,12 @@ function isLoggedIn(req, res, next) {
      
         return next();
     
-    if(req.accepts('html'))
-        res.redirect('/login');
+    if(req.accepts('html')) {
+        res.render('login', {
+            title: "Đăng nhập",
+            error: req.flash('error')
+        })
+    }
     else {
         res.status(401).send({
             message: "Unauthorized. Please login again"
