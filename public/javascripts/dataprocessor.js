@@ -3,52 +3,66 @@ var navHeight = $("nav").outerHeight(true);
 var windowHeight = $(".wrapper").outerHeight(true);
 var height = windowHeight - navHeight;
 
-$(document).ready(function() {
+$(document).ready(function () {
     socket.emit('cmd', {
-        message: "need_stream"
+        message: "start_live"
     })
 
     $("#right-col").css('height', height)
     $("#plate-data-col").css('height', height - $('.card-header').outerHeight(true))
 })
 
-$(window).resize(function() {
+$(window).resize(function () {
     $("#right-col").css('height', height)
     $("#plate-data-col").css('height', height - $('.card-header').outerHeight(true))
 })
 
-$(document).resize(function() {
+$(document).resize(function () {
     $("#right-col").css('height', height)
     $("#plate-data-col").css('height', height - $('.card-header').outerHeight(true))
 })
 
 var datatable = $('#plate-table').DataTable({
     language: {
-        sProcessing:   "Đang xử lý...",
-        sLengthMenu:   "Hiển thị&nbsp; _MENU_ &nbsp;mục",
-        sZeroRecords:  "Không có dữ liệu",
-        sInfo:         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
-        sInfoEmpty:    "Đang xem 0 đến 0 trong tổng số 0 mục",
+        sProcessing: "Đang xử lý...",
+        sLengthMenu: "Hiển thị&nbsp; _MENU_ &nbsp;mục",
+        sZeroRecords: "Không có dữ liệu",
+        sInfo: "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+        sInfoEmpty: "Đang xem 0 đến 0 trong tổng số 0 mục",
         sInfoFiltered: "(được lọc từ _MAX_ mục)",
-        sInfoPostFix:  "",
-        sSearch:       "Tìm kiếm:",
-        sUrl:          "",
+        sInfoPostFix: "",
+        sSearch: "Tìm kiếm:",
+        sUrl: "",
         oPaginate: {
-            sFirst:    "Đầu",
+            sFirst: "Đầu",
             sPrevious: "Trước",
-            sNext:     "Tiếp",
-            sLast:     "Cuối"
+            sNext: "Tiếp",
+            sLast: "Cuối"
         }
     },
-    columns : [
-        { data: 'id' },
-        { data: 'camera_id' },
-        { data: 'frametime' },
-        { data: 'encoded_vehicle_image' },
-        { data: 'encoded_plate_image' },
-        { data: 'vehicle_plate' },
+    columns: [{
+            data: 'id'
+        },
+        {
+            data: 'camera_id'
+        },
+        {
+            data: 'frametime'
+        },
+        {
+            data: 'encoded_vehicle_image'
+        },
+        {
+            data: 'encoded_plate_image'
+        },
+        {
+            data: 'vehicle_plate'
+        },
     ],
-    lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Tất cả"]]
+    lengthMenu: [
+        [10, 25, 50, 100, -1],
+        [10, 25, 50, 100, "Tất cả"]
+    ]
 });
 
 $("#formSearchPlate").validate();
@@ -79,14 +93,14 @@ $("#btnFilter").click(function (e) {
         dataType: 'json',
         data: JSON.stringify(data),
         success: (data) => {
-            if(!data || data !== []) {
+            if (!data || data !== []) {
                 datatable.clear();
                 datatable.rows.add(data.data);
                 datatable.draw();
                 // var body = '';
                 // $.each(data.data, (index, item) => {
                 //     body += '<tr><td><span>' + (index+1) + '</span></td><td><span>' + item.camera_id + '</span></td><td><span>' + item.frametime + '</span></td><td><img class="img-responsive" src="data:image/jpeg;base64,' + item.encoded_vehicle_image + '" alt="vehicle"></td><td><img class="img-responsive" src="data:image/jpeg;base64,' + item.encoded_plate_image + '" alt="plate"></td><td><span>' + item.vehicle_plate + '</span></td></tr>';
-                
+
                 // })
 
                 // $('#content-result').html(body);
@@ -101,16 +115,16 @@ $("#btnFilter").click(function (e) {
 
 
 
-socket.on('plate', function(plate) {
+socket.on('plate', function (plate) {
     var row = '';
     var maxRow = $("#table-list-plate").data('maxrow');
 
     var totalRows = $("#table-list-plate tr").length;
 
-    if(totalRows >= maxRow) {
+    if (totalRows >= maxRow) {
         var diff = totalRows - maxRow;
         diff += 3;
-        for(var i = 1; i<= diff; i++) {
+        for (var i = 1; i <= diff; i++) {
             $('#table-list-plate tr:last').remove();
         }
     }
@@ -119,9 +133,146 @@ socket.on('plate', function(plate) {
     $('#table-list-plate > tbody > tr:first').hide().before(row).slideDown('slow');
 })
 
+socket.on('live1', function (data) {
 
+    var bytes = new Uint8Array(data);
+    var blob = new Blob([bytes], {
+        type: 'application/octet-binary'
+    });
+    var url = URL.createObjectURL(blob);
+    var img = new Image;
 
-function convertDate(dateStr) {
-    var date = new Date(dateStr);
-    return (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-}
+    var ctx = $("#cam1")[0].getContext('2d')
+
+    img.onload = function () {
+        URL.revokeObjectURL(url);
+        ctx.drawImage(img, 0, 0);
+        img.src = url;
+    };
+})
+
+socket.on('live2', function (data) {
+
+    var bytes = new Uint8Array(data);
+    var blob = new Blob([bytes], {
+        type: 'application/octet-binary'
+    });
+    var url = URL.createObjectURL(blob);
+    var img = new Image;
+
+    var ctx = $("#cam2")[0].getContext('2d')
+
+    img.onload = function () {
+        URL.revokeObjectURL(url);
+        ctx.drawImage(img, 0, 0);
+        img.src = url;
+    };
+})
+
+socket.on('live3', function (data) {
+
+    var bytes = new Uint8Array(data);
+    var blob = new Blob([bytes], {
+        type: 'application/octet-binary'
+    });
+    var url = URL.createObjectURL(blob);
+    var img = new Image;
+
+    var ctx = $("#cam3")[0].getContext('2d')
+
+    img.onload = function () {
+        URL.revokeObjectURL(url);
+        ctx.drawImage(img, 0, 0);
+        img.src = url;
+    };
+})
+
+socket.on('live4', function (data) {
+
+    var bytes = new Uint8Array(data);
+    var blob = new Blob([bytes], {
+        type: 'application/octet-binary'
+    });
+    var url = URL.createObjectURL(blob);
+    var img = new Image;
+
+    var ctx = $("#cam4")[0].getContext('2d')
+
+    img.onload = function () {
+        URL.revokeObjectURL(url);
+        ctx.drawImage(img, 0, 0);
+        img.src = url;
+    };
+})
+
+socket.on('live5', function (data) {
+
+    var bytes = new Uint8Array(data);
+    var blob = new Blob([bytes], {
+        type: 'application/octet-binary'
+    });
+    var url = URL.createObjectURL(blob);
+    var img = new Image;
+
+    var ctx = $("#cam5")[0].getContext('2d')
+
+    img.onload = function () {
+        URL.revokeObjectURL(url);
+        ctx.drawImage(img, 0, 0);
+        img.src = url;
+    };
+})
+
+socket.on('live6', function (data) {
+
+    var bytes = new Uint8Array(data);
+    var blob = new Blob([bytes], {
+        type: 'application/octet-binary'
+    });
+    var url = URL.createObjectURL(blob);
+    var img = new Image;
+
+    var ctx = $("#cam6")[0].getContext('2d')
+
+    img.onload = function () {
+        URL.revokeObjectURL(url);
+        ctx.drawImage(img, 0, 0);
+        img.src = url;
+    };
+})
+
+socket.on('live7', function (data) {
+
+    var bytes = new Uint8Array(data);
+    var blob = new Blob([bytes], {
+        type: 'application/octet-binary'
+    });
+    var url = URL.createObjectURL(blob);
+    var img = new Image;
+
+    var ctx = $("#cam7")[0].getContext('2d')
+
+    img.onload = function () {
+        URL.revokeObjectURL(url);
+        ctx.drawImage(img, 0, 0);
+        img.src = url;
+    };
+})
+
+socket.on('live8', function (data) {
+
+    var bytes = new Uint8Array(data);
+    var blob = new Blob([bytes], {
+        type: 'application/octet-binary'
+    });
+    var url = URL.createObjectURL(blob);
+    var img = new Image;
+
+    var ctx = $("#cam8")[0].getContext('2d')
+
+    img.onload = function () {
+        URL.revokeObjectURL(url);
+        ctx.drawImage(img, 0, 0);
+        img.src = url;
+    };
+})

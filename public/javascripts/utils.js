@@ -36,3 +36,8 @@ function base64ArrayBuffer(arrayBuffer) {
     }
     return base64;
 }
+
+function convertDate(dateStr) {
+    var date = new Date(dateStr);
+    return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+}

@@ -92,13 +92,13 @@ body, html {
 }
 
 .barrier-video {
-    background: #737373;
-    color: #fff;
+    background: black;
+    color: red;
     padding: 10px;
 }
   
 .barrier-video:hover {
-    background: #222;
+    background: rgb(14, 14, 14);
 }
 
 .barrier-card {
