@@ -86,12 +86,13 @@ function monitor(req, res) {
                     order: [
                         ['frametime', 'desc']
                     ],
-                    limit: 10
+                    limit: 5
                 })
                 .then(list => {
                     res.render('plate/monitor', {
                         title: "Giảm sát hệ thống nhận diện biển số",
-                        user: req.user
+                        user: req.user,
+                        list: list
                     })
                 })
                 .catch(error => {

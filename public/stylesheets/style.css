@@ -150,12 +150,13 @@ body, html {
     padding-top: 0;
 }
 #plate-data-col {
-    height: 500px !important;
+    height: 400px 
 }
 
-#bodyPlateTable {
-    height: 30px; overflow-y: scroll
-}
+/* #bodyPlateTable {
+    max-height: 750px; 
+    overflow-y: scroll
+} */
 
 .data {
     margin: 0

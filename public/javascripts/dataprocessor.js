@@ -1,3 +1,18 @@
+var navHeight = $("nav").outerHeight(true);
+var windowHeight = $(".wrapper").outerHeight(true);
+var height = windowHeight - navHeight;
+
+$(document).ready(function() {
+    $("#right-col").css('height', height)
+    $("#plate-data-col").css('height', height - $('.card-header').outerHeight(true))
+})
+
+$(window).resize(function() {
+    $("#right-col").css('height', height)
+    $("#plate-data-col").css('height', height - $('.card-header').outerHeight(true))
+})
+
+
 var datatable = $('#plate-table').DataTable({
     language: {
         sProcessing:   "Đang xử lý...",
