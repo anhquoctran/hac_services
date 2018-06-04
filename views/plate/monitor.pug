@@ -5,52 +5,56 @@ block links
     
 block contents
     -var link = "http://fakeimg.pl/80x80/"
-    #row-monitoring.row
+    -var url_fake = "http://via.placeholder.com/1280x720"
+    #row-monitoring.row.bg-dark.text-white
         .col-md-9.float-left
             .row
                 .col-md-3.barrier-video
                     .embed-responsive.embed-responsive-16by9
-                        video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+                        img.embed-responsive-item(src=url_fake )
                 .col-md-3.barrier-video
                     .embed-responsive.embed-responsive-16by9
-                        video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+                        img.embed-responsive-item(src=url_fake )
                 .col-md-3.barrier-video
                     .embed-responsive.embed-responsive-16by9
-                        video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+                        img.embed-responsive-item(src=url_fake )
                 .col-md-3.barrier-video
                     .embed-responsive.embed-responsive-16by9
-                        video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+                        img.embed-responsive-item(src=url_fake )
                 .col-md-3.barrier-video
                     .embed-responsive.embed-responsive-16by9
-                        video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+                        img.embed-responsive-item(src=url_fake )
                 .col-md-3.barrier-video
                     .embed-responsive.embed-responsive-16by9
-                        video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+                        img.embed-responsive-item(src=url_fake )
                 .col-md-3.barrier-video
                     .embed-responsive.embed-responsive-16by9
-                        video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+                        img.embed-responsive-item(src=url_fake )
                 .col-md-3.barrier-video
                     .embed-responsive.embed-responsive-16by9
-                        video.embed-responsive-item(src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' )
+                        img.embed-responsive-item(src=url_fake )
         #right-col.col-md-3
             //button.btn.btn-secondary(disabled) Biển số
-            .card(style='height: 100%')
+            .card.bg-dark.text-white(style='height: 100%; border-radius: 0px')
                 .card-header
-                    h5 Nhận dạng thời gian thực
+                    h5
+                        i.fas.fa-database
+                        | &nbsp;Nhận dạng thời gian thực
                 .card-body.px-0.py-0
                     #plate-data-col.mx-0(style='max-height: 100% !important; overflow-y: scroll; overflow-x: hidden; table-layout: fixed;')
-                        table#table-list-plate.table.table-striped.table-hover
+                        table#table-list-plate.table.table-striped.table-hover(data-maxrow="15")
                             tbody#bodyPlateTable
-                                -var n = 1
-                                    while n <= 15
+                                if list
+                                    each item, index in list
                                         tr
                                             td
                                                 .row
                                                     .col-md-3
-                                                        img.img-responsive(src=link, alt="plate")
-                                                    .col-md-9.ml-auto
-                                                        p.data Mã camera:
-                                                        p.data Biển số:
+                                                        img.img-responsive(src='data:image/jpee;base64,' + item.encoded_plate_image width='80' height='80' alt="plate")
+                                                        //img.img-responsive(src=link width='80' height='80' alt="plate")
+                                                    .col-md-9
+                                                        p.data Mã camera: #{item.camera_id}
+                                                        p.data Biển số: #{item.vehicle_plate}
                                                         p.data Thời gian:
-                                                        p.data Vị trí:
+                                                        p.data Vị trí: #{item.location}
                                         -n ++

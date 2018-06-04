@@ -171,6 +171,7 @@ function filter(req, res) {
                         x.frametime = moment(x.frametime).format('L');
                         x.encoded_vehicle_image = '<img class="img-responsive" width="80" heigh="80" src="data:image/jpeg;base64,' + x.encoded_vehicle_image + '" alt="vehicle">';
                         x.encoded_plate_image = '<img class="img-responsive" width="128" heigh="72" src="data:image/jpeg;base64,' + x.encoded_plate_image + '" alt="plate">'
+                        return x;
                     })
                     res.json({
                         data: data

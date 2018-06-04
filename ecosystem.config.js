@@ -12,7 +12,7 @@ module.exports = {
 			env: {
 				COMMON_VARIABLE: 'true'
 			},
-			ignore_watch : ["node_modules", "public", ".vscode", "view", ".gitigore", "bin/public"],
+			ignore_watch : ["node_modules", "public", ".vscode", "views", ".gitigore", "bin/public"],
 			watch: true,
 			env_production : {
 				NODE_ENV: 'development'

@@ -1,8 +1,13 @@
+var socket = io();
 var navHeight = $("nav").outerHeight(true);
 var windowHeight = $(".wrapper").outerHeight(true);
 var height = windowHeight - navHeight;
 
 $(document).ready(function() {
+    socket.emit('cmd', {
+        message: "need_stream"
+    })
+
     $("#right-col").css('height', height)
     $("#plate-data-col").css('height', height - $('.card-header').outerHeight(true))
 })
@@ -12,6 +17,10 @@ $(window).resize(function() {
     $("#plate-data-col").css('height', height - $('.card-header').outerHeight(true))
 })
 
+$(document).resize(function() {
+    $("#right-col").css('height', height)
+    $("#plate-data-col").css('height', height - $('.card-header').outerHeight(true))
+})
 
 var datatable = $('#plate-table').DataTable({
     language: {
@@ -90,8 +99,29 @@ $("#btnFilter").click(function (e) {
 
 })
 
-var socket = io();
+
 
 socket.on('plate', function(plate) {
+    var row = '';
+    var maxRow = $("#table-list-plate").data('maxrow');
 
+    var totalRows = $("#table-list-plate tr").length;
+
+    if(totalRows >= maxRow) {
+        var diff = totalRows - maxRow;
+        diff += 3;
+        for(var i = 1; i<= diff; i++) {
+            $('#table-list-plate tr:last').remove();
+        }
+    }
+
+    row += '<tr><td><div class="row"><div class="col-md-3"><img class="img-responsive" src="data:image/jpeg;base64,' + plate.encoded_plate_image + '" width="80" height="80" alt="plate"></div><div class="col-md-9"><p class="data">Mã camera: ' + plate.camera_id + '</p><p class="data">Biển số: ' + plate.vehicle_plate + '</p><p class="data">Thời gian: ' + convertDate(plate.frametime) + '</p><p class="data">Vị trí: ' + plate.location + '</p></div></div></td></tr>'
+    $('#table-list-plate > tbody > tr:first').hide().before(row).slideDown('slow');
 })
+
+
+
+function convertDate(dateStr) {
+    var date = new Date(dateStr);
+    return (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+}
