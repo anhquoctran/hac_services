@@ -70,19 +70,37 @@ function checkUpdate(req, res) {
                     }
                 })
                 .then(v => {
-                    res.json({
-                        size: v.size,
-                        version: v.version,
-                        url_download: v.url,
-                        latest: true
-                    })
+                    if(v) {
+                        return res.json({
+                            message: "found",
+                            data: {
+                                size: v.size,
+                                version: v.version,
+                                url_download: v.url,
+                                latest: true
+                            }
+                            
+                        })
+                    }
+                    else {
+                        return res.json({
+                            message: "not found",
+                            data: null
+                        })
+                    }
                 })
                 .catch(err => {
-                    res.sendStatus(500)
+                    console.log(err);
+                    return res.status(500).send({
+                        message: err
+                    })
+                    
                 })
         })
         .catch(() => {
-            res.sendStatus(500)
+            return res.status(500).send({
+                message: 'Lỗi truy vấn cơ sở dữ liệu'
+            })
         })
 }
 

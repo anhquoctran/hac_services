@@ -98,7 +98,7 @@ body, html {
 }
   
 .barrier-video:hover {
-    background: rgb(14, 14, 14);
+    background: rgb(0, 0, 0);
 }
 
 .barrier-card {

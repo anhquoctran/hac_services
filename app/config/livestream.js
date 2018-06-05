@@ -9,8 +9,7 @@ module.exports = function (socket) {
     socket.on('connection', function (client) {
         client.on('cmd', (data) => {
             if (data) {
-                var cond = data.message == "need_stream"
-                if (data.message == "need_stream") {
+                if (data.message == "start_live") {
                     db.sync()
                         .then(() => {
                             device.findAll({
@@ -31,6 +30,7 @@ module.exports = function (socket) {
                                             url = 'rtsp://' + key + ':554/av0_0';
                                             urls.push(url);
                                         })
+                                        delete urls
 
                                         var tempArr = [
                                             "rtsp://192.168.10.5:554/av0_0",
@@ -45,13 +45,12 @@ module.exports = function (socket) {
 
                                         var streams = [];
 
-                                        urls.map(function (uri, i) {
+                                        tempArr.map(function (uri, i) {
                                             var stream = new rtsp.FFMpeg({
                                                 input: uri,
                                                 resolution: '1280x720',
                                                 quality: 3
                                             });
-
 
                                             stream.on('start', function () {
                                                 console.log('stream ' + i + ' started');
@@ -68,8 +67,9 @@ module.exports = function (socket) {
                                             var pipeStream = function (data) {
                                                 var id = i + 1
                                                 client.emit('live' + id, data);
+                                                console.log(data);
                                             };
-                                            
+
                                             stream.on('data', pipeStream);
 
                                             client.on('disconnect', function () {

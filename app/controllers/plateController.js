@@ -120,7 +120,8 @@ function getPlatesIndex(req, res) {
             Plate.findAll({
                     order: [
                         ['frametime', 'desc']
-                    ]
+                    ],
+                    limit: 100
                 })
                 .then(result => {
 
@@ -164,7 +165,8 @@ function filter(req, res) {
                         frametime: {
                             $between: [dateFrom, dateTo]
                         }
-                    }
+                    },
+                    limit: 100
                 })
                 .then(data => {
                     _.map(data, function(x) {

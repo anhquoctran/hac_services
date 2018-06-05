@@ -112,6 +112,6 @@ db.authenticate().then(() => {
 
 cleanupJob.start();
 
-require('./app/middleware/helpers').getNetworkIPAddress();
+//require('./app/middleware/helpers').getNetworkIPAddress();
 
 module.exports = app;

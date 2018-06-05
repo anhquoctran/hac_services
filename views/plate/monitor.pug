@@ -7,7 +7,7 @@ block contents
     -var link = "http://fakeimg.pl/80x80/"
     -var url_fake = "http://via.placeholder.com/1280x720"
     #row-monitoring.row.bg-dark.text-white
-        .col-md-9.float-left
+        .col-md-9.float-left(style='background-color: black')
             .row
                 .col-md-3.barrier-video
                     .embed-responsive.embed-responsive-16by9
@@ -57,4 +57,5 @@ block contents
                                                         p.data Biển số: #{item.vehicle_plate}
                                                         p.data Thời gian:
                                                         p.data Vị trí: #{item.location}
-                                        -n ++
+append scripts
+    script(src='/javascripts/livestream.js')
