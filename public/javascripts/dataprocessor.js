@@ -43,6 +43,9 @@ var datatable = $('#plate-table').DataTable({
 
 $("#formSearchPlate").validate();
 
+$(document).ready(function() {
+    formatDate();
+})
 
 $("#btnFilter").click(function (e) {
     e.preventDefault();

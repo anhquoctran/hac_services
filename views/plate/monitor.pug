@@ -44,7 +44,7 @@ block contents
                     #plate-data-col.mx-0(style='max-height: 100% !important; overflow-y: scroll; overflow-x: hidden; table-layout: fixed;')
                         table#table-list-plate.table.table-striped.table-hover(data-maxrow="15")
                             tbody#bodyPlateTable
-                                if list
+                                if list != null || list != undefined
                                     each item, index in list
                                         tr
                                             td
@@ -55,7 +55,13 @@ block contents
                                                     .col-md-9
                                                         p.data Mã camera: #{item.camera_id}
                                                         p.data Biển số: #{item.vehicle_plate}
-                                                        p.data Thời gian:
+                                                        p.data Thời gian: 
+                                                            span.date #{item.frametime}
                                                         p.data Vị trí: #{item.location}
+                                else
+                                    tr
+                                        td.text-center
+                                            .row
+                                                p sdfdfsdf
 append scripts
     script(src='/javascripts/livestream.js')

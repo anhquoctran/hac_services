@@ -8,7 +8,7 @@ $(document).ready(function () {
     // socket.emit('cmd', {
     //     message: 'start_live'
     // })
-
+    formatDate();
     $("#right-col").css('height', height)
     $("#plate-data-col").css('height', height - $('.card-header').outerHeight(true))
 })

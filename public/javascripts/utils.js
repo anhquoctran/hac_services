@@ -41,3 +41,11 @@ function convertDate(dateStr) {
     var date = new Date(dateStr);
     return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
 }
+
+function formatDate() {
+    var tmp = $('.date');
+    var dateData = $(".date").html()
+    var d = new Date(dateData).toISOString();
+    var formatDate = moment().format('DD-MM-YYYY HH:mm:ss');
+    $('.date').html(formatDate.toString());
+}
