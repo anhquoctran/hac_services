@@ -28,21 +28,19 @@ block contents
                             th Ảnh biển số
                             th Biển số
                     tbody#content-result
-                        if plates
-                            each plate, index in plates
-                                tr
-                                    td
-                                        span= index+1
-                                    td
-                                        span= plate.camera_id
-                                    td
-                                        span.date= plate.frametime
-                                    td
-                                        img.img-responsive(src='data:image/jpeg;base64,' + plate.encoded_vehicle_image alt='vehicle' width='128', heigh='72')
-                                    td
-                                        img.img-responsive(src='data:image/jpeg;base64,' + plate.encoded_plate_image alt='plate' width='100', heigh='100')
-                                    td
-                                        span= plate.vehicle_plate
+                                //- tr
+                                //-     td
+                                //-         span= index+1
+                                //-     td
+                                //-         span= plate.camera_id
+                                //-     td
+                                //-         span.date= plate.frametime
+                                //-     td
+                                //-         img.img-responsive(src='data:image/jpeg;base64,' + plate.encoded_vehicle_image alt='vehicle' width='128', heigh='72')
+                                //-     td
+                                //-         img.img-responsive(src='data:image/jpeg;base64,' + plate.encoded_plate_image alt='plate' width='100', heigh='100')
+                                //-     td
+                                //-         span= plate.vehicle_plate
 
 
 append scripts

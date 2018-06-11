@@ -1,4 +1,6 @@
 var datatable = $('#plate-table').DataTable({
+    serverSide: true,
+    processing: false,
     language: {
         sProcessing: "Đang xử lý...",
         sLengthMenu: "Hiển thị&nbsp; _MENU_ &nbsp;mục",
@@ -38,13 +40,22 @@ var datatable = $('#plate-table').DataTable({
     lengthMenu: [
         [10, 25, 50, 100, -1],
         [10, 25, 50, 100, "Tất cả"]
-    ]
+    ],
+    ajax: {
+        url: '/plates/fetch',
+        dataSrc: 'data',
+        method: 'post',
+        contentType: 'application/json',
+        data: function(d) {
+            return JSON.stringify(d);
+        }
+    }
 });
 
 $("#formSearchPlate").validate();
 
 $(document).ready(function() {
-    formatDate();
+    //formatDate();
 })
 
 $("#btnFilter").click(function (e) {

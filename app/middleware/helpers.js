@@ -3,6 +3,7 @@ var buffer = require('buffer')
 var os = require('os');
 var ifaces = os.networkInterfaces();
 var appDir = path.dirname(require.main.filename)
+var moment = require('moment')
 
 function genChars(length = 5) {
     var text = "";
@@ -27,6 +28,11 @@ function hash(str) {
 function getDateTimeString(date) {
     var d = new Date(date)
     return d.getFullYear() + d.getMonth() + d.getDay() + "_" + d.getHours() + d.getMinutes() + d.getSeconds()
+}
+
+function formatDate(dateString) {
+    var formatDate = moment(dateString).format('DD-MM-YYYY HH:mm:ss');
+    return formatDate.toString();
 }
 
 function decode_base64(base64str, filename) {
@@ -68,3 +74,4 @@ module.exports.hash = hash;
 module.exports.getDateTimeString = getDateTimeString;
 module.exports.decode_base64 = decode_base64;
 module.exports.getNetworkIPAddress = getNetworkIPAddress;
+module.exports.formatDate = formatDate;

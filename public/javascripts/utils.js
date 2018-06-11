@@ -43,9 +43,8 @@ function convertDate(dateStr) {
 }
 
 function formatDate() {
-    var tmp = $('.date');
     var dateData = $(".date").html()
     var d = new Date(dateData).toISOString();
-    var formatDate = moment().format('DD-MM-YYYY HH:mm:ss');
+    var formatDate = moment(d).format('DD-MM-YYYY HH:mm:ss');
     $('.date').html(formatDate.toString());
 }

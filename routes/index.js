@@ -109,6 +109,8 @@ function routes(passport) {
 		.trim()
 		.withMessage('cannot be null and must be date time type')
 	], plateController.filter)
+
+	router.post('/plates/fetch', authMidd.isLoggedIn, plateController.fetch)
 }
 
 module.exports.routes = routes;

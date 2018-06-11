@@ -115,35 +115,102 @@ function monitor(req, res) {
 }
 
 function getPlatesIndex(req, res) {
+
+    res.render('plate/plates', {
+        title: 'Danh sách biển số',
+        user: req.user,
+    })
+}
+
+function fetch(req, res) {
+    var per_page = req.body.length ? req.body.length : 20
+    var page = req.body.draw ? req.body.draw : 1
+    var search = req.body.search ? req.body.search : ''
+    var options = {}
+    
+    if(per_page == -1) {
+        options = {
+            order: [
+                ['frametime', 'desc']
+            ],
+            where: search || search != '' ? {
+                vehicle_plate: {
+                    $like: '%' +  search + '%'
+                }
+            } : null
+        }
+    } else {
+        options = {
+            order: [
+                ['frametime', 'desc']
+            ],
+            offset: (page - 1) * per_page,
+            limit: per_page,
+            where: search || search != '' ? {
+                vehicle_plate: {
+                    $like: '%' +  search + '%'
+                }
+            } : null
+        }
+    }
+
     db.sync()
         .then(() => {
-            Plate.findAll({
-                    order: [
-                        ['frametime', 'desc']
-                    ],
-                    limit: 100
-                })
+            Plate.count({
+                col: 'id',
+                distinct: true
+            })
+            .then(count => {
+                Plate.findAll(options)
                 .then(result => {
 
-                    res.render('plate/plates', {
-                        title: 'Danh sách biển số',
-                        user: req.user,
-                        plates: result
+                    _.map(result, function(x) {
+                        x.frametime = helpers.formatDate(new Date(x.frametime).toISOString());
+                        x.encoded_vehicle_image = '<img class="img-responsive" width="80" heigh="80" src="data:image/jpeg;base64,' + x.encoded_vehicle_image + '" alt="vehicle">';
+                        x.encoded_plate_image = '<img class="img-responsive" width="128" heigh="72" src="data:image/jpeg;base64,' + x.encoded_plate_image + '" alt="plate">'
+                        return x;
+                    })
+
+                    res.json({
+                        data: result,
+                        draw: page,
+                        recordsFiltered: count,
+                        recordsTotal: count
                     })
                 })
                 .catch(err => {
-                    res.render('errors/error', {
-                        title: "Lỗi",
+                    console.error(err);
+                    res.json( {
                         code: '500',
-                        message: 'Truy vấn không hợp lệ'
+                        message: 'Truy vấn không hợp lệ',
+                        data: [],
+                        draw: 0,
+                        recordsFiltered: 0,
+                        recordsTotal: 0
                     })
                 })
+            })
+            .catch(er => {
+                console.error(er);
+                res.json({
+                    code: '500',
+                    message: 'Truy vấn không hợp lệ',
+                    data: [],
+                    draw: 0,
+                    recordsFiltered: 0,
+                    recordsTotal: 0
+                })
+            })
+            
         })
         .catch(err => {
-            res.render('errors/error', {
-                title: "Lỗi",
+            res.json({
                 code: '500',
-                message: 'Không thể kết nối Cơ sở dữ liệu'
+                data: [],
+                message: 'Không thể kết nối Cơ sở dữ liệu',
+                draw: 0,
+                recordsFiltered: 0,
+                recordsTotal: 0
             })
         })
 }
@@ -160,7 +227,8 @@ function filter(req, res) {
         .then(() => {
             var dateFrom = new Date(req.body.dateFrom);
             var dateTo = new Date(req.body.dateTo);
-            Plate.findAll({
+            Plate.findAll({ 
+                    attributes: ['id', 'camare_id', 'frametime', 'encoded_vehicle_image', 'encoded_plate_image', 'vehicle_plate'] ,
                     where: {
                         frametime: {
                             $between: [dateFrom, dateTo]
@@ -175,7 +243,7 @@ function filter(req, res) {
                         x.encoded_plate_image = '<img class="img-responsive" width="128" heigh="72" src="data:image/jpeg;base64,' + x.encoded_plate_image + '" alt="plate">'
                         return x;
                     })
-                    
+
                     res.json({
                         data: data
                     })
@@ -201,3 +269,4 @@ module.exports.getImage = getImage;
 module.exports.monitor = monitor;
 module.exports.getPlatesIndex = getPlatesIndex;
 module.exports.filter = filter;
+module.exports.fetch = fetch;
