@@ -28,36 +28,54 @@ function upload(req, res) {
     }
 
     var url = '/dl/' + uuid;
+    
+    version.findAll({ where: {is_deleted: 0, latest: 1 }})
+    .success(list => {
+        if(list) {
 
-    version.build({
-            version: req.body.major + '.' + req.body.minor + '.' + req.body.build + '.' + req.body.revision,
-            latest: req.body.latest,
-            uid: uuid,
-            filename: req.file.filename,
-            url: url,
-            size: req.body.size
-        })
-        .save()
-        .then(v => {
-            res.json({
-                message: "Tải lên thành công!",
-                success: true,
-                data: {
-                    version: v.version,
-                    latest: v.latest,
-                    uid: v.uid,
-                    filename: v.filename,
-                    url: v.url
-                }
+            list.forEach(function(item) {
+                item.updateAttributes({ where: { is_deleted: 0, latest: 0 }})
             })
-        })
-        .catch(error => {
-            res.status(500).send({
-                message: "Tải lên thất bại!",
-                success: false,
-                data: null
+
+            version.build({
+                version: req.body.major + '.' + req.body.minor + '.' + req.body.build + '.' + req.body.revision,
+                latest: req.body.latest,
+                uid: uuid,
+                filename: req.file.filename,
+                url: url,
+                size: req.body.size
             })
+            .save()
+            .then(v => {
+                res.json({
+                    message: "Tải lên thành công!",
+                    success: true,
+                    data: {
+                        version: v.version,
+                        latest: v.latest,
+                        uid: v.uid,
+                        filename: v.filename,
+                        url: v.url
+                    }
+                })
+            })
+            .catch(error => {
+                res.status(500).send({
+                    message: "Tải lên thất bại!",
+                    success: false,
+                    data: null
+                })
+            })
+        }
+    })
+    .catch(error => {
+        console.log(error)
+        res.status(500).send({
+            message: "Tải lên thất bại!",
+            success: false,
+            data: null
         })
+    })
 
 }
 
