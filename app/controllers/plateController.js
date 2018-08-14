@@ -46,6 +46,8 @@ function addImage(req, res) {
         vehicle_plate: body.vehicle_plate,
     }
 
+    console.log(JSON.stringify(item));
+
     Plate.build({
             camera_id: camera_id,
             frametime: frametime,
