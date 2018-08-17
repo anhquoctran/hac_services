@@ -1,5 +1,3 @@
-/* jshint indent: 2 */
-
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('versiontbl', {
     id: {
@@ -15,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
     latest: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: '((0))'
+      defaultValue: '0'
     },
     uid: {
       type: DataTypes.STRING,

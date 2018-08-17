@@ -1,6 +1,6 @@
 var sequelize = require('sequelize')
-var db = require('../../database')
-var version = require('../models/versiontbl')(db, sequelize);
+var db = require('../../database');
+var Version = require('../models/versiontbl')(db, sequelize);
 var uuidv4 = require('uuid/v4')
 var fs = require('fs')
 var path = require('path')
@@ -28,67 +28,81 @@ function upload(req, res) {
     }
 
     var url = '/dl/' + uuid;
-    
-    version.findAll({ where: {is_deleted: 0, latest: 1 }})
-    .success(list => {
-        if(list) {
-
-            list.forEach(function(item) {
-                item.updateAttributes({ where: { is_deleted: 0, latest: 0 }})
-            })
-
-            version.build({
-                version: req.body.major + '.' + req.body.minor + '.' + req.body.build + '.' + req.body.revision,
-                latest: req.body.latest,
-                uid: uuid,
-                filename: req.file.filename,
-                url: url,
-                size: req.body.size
-            })
-            .save()
-            .then(v => {
-                res.json({
-                    message: "Tải lên thành công!",
-                    success: true,
-                    data: {
-                        version: v.version,
-                        latest: v.latest,
-                        uid: v.uid,
-                        filename: v.filename,
-                        url: v.url
+    db.sync()
+        .then(() => {
+            Version.findAll({
+                    where: {
+                        is_deleted: 0,
+                        latest: 1
                     }
                 })
-            })
-            .catch(error => {
-                res.status(500).send({
-                    message: "Tải lên thất bại!",
-                    success: false,
-                    data: null
-                })
-            })
-        }
-    })
-    .catch(error => {
-        console.log(error)
-        res.status(500).send({
-            message: "Tải lên thất bại!",
-            success: false,
-            data: null
-        })
-    })
+                .then(list => {
+                    if (list) {
 
+                        list.forEach(function (item) {
+                            item.updateAttributes({
+                                where: {
+                                    is_deleted: 0,
+                                    latest: 0
+                                }
+                            })
+                        })
+
+                        Version.build({
+                                version: req.body.major + '.' + req.body.minor + '.' + req.body.build + '.' + req.body.revision,
+                                latest: req.body.latest,
+                                uid: uuid,
+                                filename: req.file.filename,
+                                url: url,
+                                size: req.body.size
+                            })
+                            .save()
+                            .then(v => {
+                                res.json({
+                                    message: "Tải lên thành công!",
+                                    success: true,
+                                    data: {
+                                        version: v.version,
+                                        latest: v.latest,
+                                        uid: v.uid,
+                                        filename: v.filename,
+                                        url: v.url
+                                    }
+                                })
+                            })
+                            .catch(error => {
+                                res.status(500).send({
+                                    message: "Tải lên thất bại!",
+                                    success: false,
+                                    data: null
+                                })
+                            })
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                    res.status(500).send({
+                        message: "Tải lên thất bại!",
+                        success: false,
+                        data: null
+                    })
+                })
+        })
+        .catch(err => {
+            console.log(err)
+        })
 }
 
 function checkUpdate(req, res) {
     db.sync()
         .then(() => {
-            version.findOne({
+            Version.findOne({
                     where: {
                         latest: 1
                     }
                 })
                 .then(v => {
-                    if(v) {
+                    if (v) {
                         return res.json({
                             message: "found",
                             data: {
@@ -97,10 +111,9 @@ function checkUpdate(req, res) {
                                 url_download: v.url,
                                 latest: true
                             }
-                            
+
                         })
-                    }
-                    else {
+                    } else {
                         return res.json({
                             message: "not found",
                             data: null
@@ -112,7 +125,7 @@ function checkUpdate(req, res) {
                     return res.status(500).send({
                         message: err
                     })
-                    
+
                 })
         })
         .catch(() => {
@@ -127,7 +140,7 @@ function download(req, res) {
     if (uuidValidator(uuid)) {
         db.sync()
             .then(() => {
-                version.findOne({
+                Version.findOne({
                         where: {
                             uid: uuid
                         }
@@ -148,7 +161,7 @@ function download(req, res) {
 function getArchive(req, res) {
     db.sync()
         .then(() => {
-            version.findAll({
+            Version.findAll({
                     where: {
                         latest: 0
                     },
@@ -178,7 +191,7 @@ function getArchive(req, res) {
 function latest(req, res) {
     db.sync()
         .then(() => {
-            version.findOne({
+            Version.findOne({
                     where: {
                         latest: 1
                     }

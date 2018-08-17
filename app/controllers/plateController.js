@@ -1,10 +1,8 @@
 var validator = require('validator')
-var sequelize = require('sequelize');
 var _ = require('lodash')
 var moment = require('moment')
-
 var helpers = require('../middleware/helpers')
-
+var sequelize = require('sequelize');
 var db = require('../../database')
 var Plate = require('../models/platetbl')(db, sequelize)
 
