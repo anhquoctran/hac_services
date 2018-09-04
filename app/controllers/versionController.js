@@ -18,7 +18,6 @@ function uploadVersion(req, res) {
 
 function upload(req, res) {
     var uuid = uuidv4().toLocaleUpperCase();
-    console.log(req.file)
     fs.writeFileSync(path.join(appDir, 'log.json'), req.toString());
 
     if (!req.file) {

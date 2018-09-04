@@ -6,6 +6,11 @@ var upload = require('../app/config/storage')
 var validator = require('validator')
 var plateController = require('../app/controllers/plateController')
 var authMidd = require('../app/middleware/authentication')
+var fs = require('fs')
+var path = require('path')
+
+const appDir = path.dirname(require.main.filename)
+
 const {
 	check,
 	validationResult
@@ -47,7 +52,7 @@ function routes(passport) {
 
 	router.get('/profile/:username', authMidd.isLoggedIn, userController.showProfile)
 
-	router.post('/update-profile', userController.updateProfile);
+	router.post('/update-profile', userController.updateProfile)
 
 	router.get('/logout', userController.logout)
 
@@ -111,6 +116,17 @@ function routes(passport) {
 	], plateController.filter)
 
 	router.post('/plates/fetch', authMidd.isLoggedIn, plateController.fetch)
+
+	router.post('/temp/upload/', (req, res) => {
+
+	})
+
+	router.get('/dl-content/:filename', (req, res) => {
+		if(req.params.filename) {
+			var fullpath = path.join(appDir, "public/raw", req.params.filename)
+			return res.download(fullpath)
+		} else return res.status(404).send("<h1>File not found</h1>")
+	})
 }
 
 module.exports.routes = routes;

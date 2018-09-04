@@ -38,6 +38,9 @@
     "socket.io-client": "^2.1.1",
     "tedious": "^2.6.1",
     "uuid": "^3.2.1",
-    "uuid-validate": "0.0.2"
+    "uuid-validate": "0.0.2",
+    "jsmpeg": "^1.0.0",
+    "node-rtsp-stream": "^0.0.3",
+    "fluent-ffmpeg": "^2.1.2"
   }
 }
